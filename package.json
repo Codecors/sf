@@ -1,0 +1,23 @@
+{
+  "name": "sidenav",
+  "version": "0.0.1",
+  "description": "",
+  "homepage": "",
+  "author": {
+    "name": "Tasti Zakarie"
+  },
+  "license": "MIT",
+  "main": "dist/sidenav.js",
+  "repository": {
+    "type": "git",
+    "url": ""
+  },
+  "keywords": [],
+  "scripts": {
+    "build": "babel --stage 0 src/sideNav.js -o dist/sideNav.js"
+  },
+  "dependencies": {
+    "hammerjs": "^2.0.4",
+    "velocity-animate": "^1.2.2"
+  }
+}
