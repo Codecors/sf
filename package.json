@@ -14,7 +14,7 @@
   },
   "keywords": [],
   "scripts": {
-    "build": "babel --stage 0 src/sideNav.js -o dist/sideNav.js"
+    "build": "babel --stage 0 --optional runtime src/sideNav.js -o dist/sideNav.js"
   },
   "dependencies": {
     "hammerjs": "^2.0.4",

@@ -1,12 +1,18 @@
 'use strict';
 
-Object.defineProperty(exports, '__esModule', {
+var _createClass = require('babel-runtime/helpers/create-class')['default'];
+
+var _classCallCheck = require('babel-runtime/helpers/class-call-check')['default'];
+
+var _Object$defineProperty = require('babel-runtime/core-js/object/define-property')['default'];
+
+var _Object$assign = require('babel-runtime/core-js/object/assign')['default'];
+
+_Object$defineProperty(exports, '__esModule', {
   value: true
 });
 
-var _createClass = (function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ('value' in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; })();
-
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError('Cannot call a class as a function'); } }
+var instance = null;
 
 var SideNav = (function () {
   function SideNav(Hammer, Velocity, options) {
@@ -14,7 +20,12 @@ var SideNav = (function () {
 
     this.Hammer = Hammer;
     this.Velocity = Velocity;
-    this.options = { menuWidth: 240 }; // TODO: Extend
+    this.options = _Object$assign({
+      menuWidth: 240,
+      zIndex: 999,
+      dragZIndex: 998,
+      overlayZIndex: 997
+    }, options);
 
     this.panning = false;
     this.showing = false;
@@ -51,7 +62,7 @@ var SideNav = (function () {
       sn.style.top = '0';
       sn.style.width = this.options.menuWidth + 'px';
       sn.style.willChange = 'left';
-      sn.style.zIndex = '999';
+      sn.style.zIndex = this.options.zIndex;
     }
   }, {
     key: '_setSideNavDragStyles',
@@ -63,7 +74,7 @@ var SideNav = (function () {
       snd.style.position = 'fixed';
       snd.style.top = '0';
       snd.style.width = '10px';
-      snd.style.zIndex = '998';
+      snd.style.zIndex = this.options.dragZIndex;
     }
   }, {
     key: '_setSideNavOverlayStyles',
@@ -78,7 +89,7 @@ var SideNav = (function () {
       sno.style.right = '0';
       sno.style.top = '0';
       sno.style.willChange = 'opacity';
-      sno.style.zIndex = '997';
+      sno.style.zIndex = this.options.overlayZIndex;
     }
   }, {
     key: '_appendDrag',
@@ -247,6 +258,24 @@ var SideNav = (function () {
       }
 
       this._onHide();
+    }
+  }, {
+    key: 'toggle',
+    value: function toggle() {
+      if (this.showing) {
+        this.hide();
+      } else {
+        this.show();
+      }
+    }
+  }], [{
+    key: 'getInstance',
+    value: function getInstance(Hammer, Velocity, options) {
+      if (!instance) {
+        instance = new SideNav(Hammer, Velocity, options);
+      }
+
+      return instance;
     }
   }]);
 

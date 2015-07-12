@@ -1,15 +1,30 @@
 'use strict';
 
+var instance = null;
+
 class SideNav {
   constructor(Hammer, Velocity, options) {
     this.Hammer = Hammer;
     this.Velocity = Velocity;
-    this.options = {menuWidth: 240}; // TODO: Extend
-    
+    this.options = Object.assign({
+      menuWidth: 240,
+      zIndex: 999,
+      dragZIndex: 998,
+      overlayZIndex: 997
+    }, options);
+
     this.panning = false;
     this.showing = false;
 
     this._init();
+  }
+
+  static getInstance(Hammer, Velocity, options) {
+    if (!instance) {
+      instance = new SideNav(Hammer, Velocity, options);
+    }
+
+    return instance;
   }
 
   _getSideNav() {
@@ -36,7 +51,7 @@ class SideNav {
     sn.style.top = '0';
     sn.style.width = this.options.menuWidth + 'px';
     sn.style.willChange = 'left';
-    sn.style.zIndex = '999';
+    sn.style.zIndex = this.options.zIndex;
   }
 
   _setSideNavDragStyles() {
@@ -47,7 +62,7 @@ class SideNav {
     snd.style.position = 'fixed';
     snd.style.top = '0';
     snd.style.width = '10px';
-    snd.style.zIndex = '998';
+    snd.style.zIndex = this.options.dragZIndex;
   }
 
   _setSideNavOverlayStyles() {
@@ -61,7 +76,7 @@ class SideNav {
     sno.style.right = '0';
     sno.style.top = '0';
     sno.style.willChange = 'opacity';
-    sno.style.zIndex = '997';
+    sno.style.zIndex = this.options.overlayZIndex;
   }
 
   _appendDrag() {
@@ -212,6 +227,14 @@ class SideNav {
     }
 
     this._onHide();
+  }
+
+  toggle() {
+    if (this.showing) {
+      this.hide();
+    } else {
+      this.show();
+    }
   }
 }
 
